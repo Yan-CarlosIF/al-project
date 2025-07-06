@@ -147,18 +147,22 @@ export default function Inspect() {
           {showArrows && (
             <>
               {/* Vetores base */}
-              <VectorArrow to={[1, 0, 0]} color="red" />
-              <VectorArrow to={[0, 1, 0]} color="green" />
-              <VectorArrow to={[0, 0, 1]} color="blue" />
+              <VectorArrow label="X" to={[1, 0, 0]} color="red" />
+              <VectorArrow label="Y" to={[0, 1, 0]} color="green" />
+              <VectorArrow label="Z" to={[0, 0, 1]} color="blue" />
             </>
           )}
 
           {showVetorialArrows && (
             <>
               {/* Vetores u, v e u×v */}
-              <VectorArrow to={u} color="yellow" />
-              <VectorArrow to={v} color="orange" />
-              <VectorArrow to={produtoVetorial.toArray()} color="purple" />
+              <VectorArrow label="X" to={u} color="yellow" />
+              <VectorArrow label="Y" to={v} color="orange" />
+              <VectorArrow
+                label="Z"
+                to={produtoVetorial.toArray()}
+                color="purple"
+              />
             </>
           )}
         </a.mesh>

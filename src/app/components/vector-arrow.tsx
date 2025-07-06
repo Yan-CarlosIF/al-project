@@ -1,36 +1,54 @@
+import { ArrowHelper, Vector3 } from "three";
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
+import { Text } from "@react-three/drei";
+
+type Props = {
+  from?: [number, number, number];
+  to: [number, number, number];
+  color?: string;
+  label?: string;
+};
 
 export function VectorArrow({
   from = [0, 0, 0],
-  to = [1, 0, 0],
-  color = "red",
-}) {
-  const ref = useRef<THREE.ArrowHelper>(null);
+  to,
+  color = "white",
+  label,
+}: Props) {
+  const ref = useRef<ArrowHelper>(null);
 
   useEffect(() => {
-    const fromVec = new THREE.Vector3(...from);
-    const toVec = new THREE.Vector3(...to);
-    const dir = toVec.clone().sub(fromVec).normalize();
-    const length = toVec.clone().sub(fromVec).length();
-
+    const dir = new Vector3(...to).sub(new Vector3(...from)).normalize();
+    const len = new Vector3(...to).sub(new Vector3(...from)).length();
     if (ref.current) {
       ref.current.setDirection(dir);
-      ref.current.setLength(length);
+      ref.current.setLength(len);
     }
   }, [from, to]);
 
   return (
-    <primitive
-      object={
-        new THREE.ArrowHelper(
-          new THREE.Vector3(1, 0, 0),
-          new THREE.Vector3(0, 0, 0),
-          1,
+    <>
+      <arrowHelper
+        ref={ref}
+        args={[
+          new Vector3(...to).sub(new Vector3(...from)).normalize(),
+          new Vector3(...from),
+          new Vector3(...to).sub(new Vector3(...from)).length(),
           color,
-        )
-      }
-      ref={ref}
-    />
+        ]}
+      />
+      {label && (
+        <Text
+          position={to}
+          fontSize={0.2}
+          color={color}
+          fontStyle="italic"
+          anchorX="center"
+          anchorY="middle"
+        >
+          {label}
+        </Text>
+      )}
+    </>
   );
 }
