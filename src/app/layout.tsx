@@ -10,7 +10,11 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Tranformações Lineares e Mudanças de Base",
-  description: "Transformações Lineares e Mudanças de Base aplicadas a Modelos 3D",
+  description:
+    "Transformações Lineares e Mudanças de Base aplicadas a Modelos 3D",
+  icons: {
+    icon: "./icon.png",
+  },
 };
 
 export default function RootLayout({
