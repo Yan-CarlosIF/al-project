@@ -133,8 +133,7 @@ export default function Inspect() {
         <a.mesh
           scale={animatedScale}
           position={animatedPosition}
-          // @ts-ignore
-          rotation={animatedRotation}
+          rotation={animatedRotation as unknown as [number, number, number]}
           ref={meshRef}
           castShadow
           receiveShadow
