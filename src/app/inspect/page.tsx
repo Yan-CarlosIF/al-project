@@ -9,6 +9,7 @@ import * as THREE from "three";
 import { VectorArrow } from "../components/vector-arrow";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
+import TriangleGeometry from "../components/triangle";
 
 function CameraLookAt({
   targetRef,
@@ -27,6 +28,7 @@ function CameraLookAt({
 }
 
 export default function Inspect() {
+  const [scaleState, setScaleState] = useState(1);
   const [isGrabing, setIsGrabing] = useState(false);
   const [showArrows, setShowArrows] = useState(false);
   const [showVetorialArrows, setShowVetorialArrows] = useState(false);
@@ -47,35 +49,50 @@ export default function Inspect() {
   }, []);
 
   const {
-    scale,
     position,
     rotation,
     lookAt,
     transparent,
     area: showArea,
     escala,
+    modelo,
   } = useControls("Transformação", {
-    scale: { label: "escala uniforme", value: 1, min: 0, max: 5, step: 0.05 },
+    scale: {
+      label: "escala uniforme",
+      value: scaleState,
+      step: 0.05,
+      onChange: (value) => setScaleState(value), // Sincroniza com o estado
+    },
     escala: { value: [1, 1, 1], min: 0, max: 10, step: 0.1 },
     position: {
       label: "translação",
       value: [0, 0, 0],
-      min: 0,
-      max: 10,
+      min: -50,
+      max: 50,
       step: 0.1,
     },
     rotation: {
       label: "rotação",
       value: [0, 0, 0],
       step: 0.1,
-      min: -Math.PI * 2,
-      max: Math.PI * 2,
+      min: -Math.PI * 3,
+      max: Math.PI * 3,
     },
+    reflexao: button(() => {
+      const newScale = scaleState * -1;
+      setScaleState(newScale);
+      // Força o controle do Leva a atualizar para o novo valor
+      // Isso acontecerá automaticamente através da sincronização
+    }),
     lookAt: { value: true },
     transparent: { value: true },
     area: {
       label: "Area paralelogramo",
       value: false,
+    },
+    modelo: {
+      options: ["cubo", "Triângulo"],
+      value: "cubo",
     },
   });
 
@@ -92,12 +109,12 @@ export default function Inspect() {
   const produtoVetorial = new THREE.Vector3().crossVectors(vetorU, vetorV);
   const area = produtoVetorial.length();
 
-  useControls("Arrows", {
+  useControls("Arrows (Vetores)", {
     "Exibir setas": button(() => setShowArrows((prevState) => !prevState)),
   });
 
   const { animatedPosition, animatedScale, animatedRotation } = useSpring({
-    animatedScale: scale,
+    animatedScale: scaleState, // Usa scaleState em vez de scale
     animatedPosition: position,
     animatedRotation: rotation,
     config: { mass: 1, tension: 170, friction: 26 },
@@ -137,7 +154,11 @@ export default function Inspect() {
           castShadow
           receiveShadow
         >
-          <boxGeometry args={[escala[0], escala[1], escala[2]]} />
+          {modelo === "cubo" ? (
+            <boxGeometry args={[escala[0], escala[1], escala[2]]} />
+          ) : (
+            <TriangleGeometry scale={escala} />
+          )}
           <meshStandardMaterial
             color="white"
             transparent
@@ -155,10 +176,10 @@ export default function Inspect() {
           {showVetorialArrows && (
             <>
               {/* Vetores u, v e u×v */}
-              <VectorArrow label="X" to={u} color="yellow" />
-              <VectorArrow label="Y" to={v} color="orange" />
+              <VectorArrow label="U" to={u} color="yellow" />
+              <VectorArrow label="V" to={v} color="orange" />
               <VectorArrow
-                label="Z"
+                label="U x V"
                 to={produtoVetorial.toArray()}
                 color="purple"
               />
