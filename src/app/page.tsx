@@ -8,8 +8,8 @@ export default function Home() {
     <main className="bg-white font-sans text-gray-900">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-purple-700 to-blue-600 px-4 py-20 text-center text-white">
-        <h1 className="mb-6 text-5xl leading-tight font-bold md:text-6xl">
-          Aplicações de Álgebra Linear em Modelos 3D
+        <h1 className="mx-auto mb-6 max-w-6xl text-5xl leading-tight font-bold">
+          Transformações Lineares e Mudanças de Base aplicadas a Modelos 3D
         </h1>
         <p className="mx-auto max-w-3xl text-center text-lg md:text-xl">
           Entenda como vetores, transformações lineares e mudanças de base são
