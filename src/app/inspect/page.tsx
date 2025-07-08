@@ -53,16 +53,19 @@ export default function Inspect() {
     lookAt,
     transparent,
     area: showArea,
+    escala,
   } = useControls("Transformação", {
-    scale: { label: "tamanho", value: 1, min: 0, max: 5, step: 0.05 },
+    scale: { label: "escala uniforme", value: 1, min: 0, max: 5, step: 0.05 },
+    escala: { value: [1, 1, 1], min: 0, max: 10, step: 0.1 },
     position: {
-      label: "posição",
+      label: "translação",
       value: [0, 0, 0],
       min: 0,
       max: 10,
       step: 0.1,
     },
     rotation: {
+      label: "rotação",
       value: [0, 0, 0],
       step: 0.1,
       min: -Math.PI * 2,
@@ -74,10 +77,6 @@ export default function Inspect() {
       label: "Area paralelogramo",
       value: false,
     },
-  });
-
-  const { escala } = useControls("Escala", {
-    escala: { value: [1, 1, 1], min: 0, max: 10, step: 0.1 },
   });
 
   const { u, v } = useControls("Produto Vetorial", {

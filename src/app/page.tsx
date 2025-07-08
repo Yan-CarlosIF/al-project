@@ -96,11 +96,11 @@ export default function Home() {
       {/* Escala e Transformações Lineares */}
       <section className="mx-auto grid max-w-6xl items-center gap-10 bg-gray-50 px-6 py-16 md:grid-cols-2">
         <Image
-          src="/scale.jpg"
+          src="/transformacoes1.png"
           alt="Transformações Lineares 3D"
           width={600}
           height={400}
-          className="rounded-2xl shadow-lg"
+          className="rounded-2xl shadow-2xl"
         />
         <div>
           <h2 className="mb-4 text-3xl font-bold">
@@ -122,7 +122,7 @@ export default function Home() {
       <section className="mx-auto flex max-w-6xl items-center justify-center gap-10 bg-gray-50 px-6 py-16">
         <Link
           href="/inspect"
-          className="rounded-2xl bg-gradient-to-br from-purple-700 to-blue-600 px-6 py-3 font-bold text-white shadow-purple-400 transition-all duration-300 hover:shadow-2xl"
+          className="rounded-2xl bg-gradient-to-br from-purple-700 to-blue-600 px-16 py-5 text-xl font-bold text-white shadow-purple-400 transition-all duration-300 hover:shadow-2xl"
         >
           Inspecionar Modelo
         </Link>
